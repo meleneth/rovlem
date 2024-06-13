@@ -5,6 +5,6 @@ defineProps<{
 </script>
 
 <template lang="pug">
-  h1(class="bg-orange-500") {{ skill.name }}
-  p {{ skill.description }}
+  h1(class="bg-orange-500") {{ skill.name }} {{ skill.level }} / {{ skill.maxlevel }}
+  p {{ skill.description }} 
 </template>
