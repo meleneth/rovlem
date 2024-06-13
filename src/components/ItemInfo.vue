@@ -4,7 +4,7 @@ defineProps<{
 }>()
 </script>
 
-<template>
-  <h1>{{ item.name }}</h1>
-  <p>{{ item.description }}</p>
+<template lang="pug">
+  h1 {{ item.name }}
+  p {{ item.description }}
 </template>
