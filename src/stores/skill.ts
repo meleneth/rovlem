@@ -14,8 +14,13 @@ export const useSkillStore = defineStore('skills', () => {
   const skills = reactive({})
   skill_definitions.value.forEach((s) => skills[s.name] = s)
 
-  const current_skill_target = items.value[0]
-  const current_skill = skills['Fishing']
+  let current_skill_target = items.value[0]
+  let current_skill = skills['Fishing']
+
+  function change_skill(new_skill, item) {
+    this.current_skill = skills[new_skill]
+    this.current_skill_target = item
+  }
 
   function gain_skill_xp(skill_name, xp) {
     const skill = skills[skill_name]
@@ -26,5 +31,5 @@ export const useSkillStore = defineStore('skills', () => {
     }
   }
 
-  return { skills, skill_definitions, gain_skill_xp, current_skill_target, current_skill }
+  return { skills, skill_definitions, gain_skill_xp, current_skill_target, current_skill, change_skill }
 })

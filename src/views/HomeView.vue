@@ -15,7 +15,7 @@ const inventory_store = useInventoryStore()
 const { inventory } = storeToRefs(inventory_store)
 
 const skill_store = useSkillStore()
-const { skills, skill_definitions, current_skill_target, current_skill } = storeToRefs(skill_store)
+const { skills, skill_definitions, current_skill_target, current_skill, change_skill } = storeToRefs(skill_store)
 </script>
 
 <template lang="pug">
@@ -25,6 +25,9 @@ const { skills, skill_definitions, current_skill_target, current_skill } = store
   ul
     li(v-for="item in items")
       <ItemInfo :item="item" />
+      p(@click="skill_store.change_skill('Fishing', item)")
+        | fishme
+
   hr
   h1 Currently Skilling:
     <SkillInfo :skill="current_skill_target" />
