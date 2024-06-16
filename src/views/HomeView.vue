@@ -15,20 +15,7 @@ const inventory_store = useInventoryStore()
 const { inventory } = storeToRefs(inventory_store)
 
 const skill_store = useSkillStore()
-const { skills, skill_definitions } = storeToRefs(skill_store)
-
-const current_skill_target = items.value[0]
-const current_skill = skills.value['Fishing']
-var num_ticks = ref(0);
-
-const ticktimer = setInterval(() => {
-  num_ticks.value = num_ticks.value + 1;
-  if (num_ticks.value > current_skill_target.ticks) {
-    num_ticks.value -= current_skill_target.ticks
-    inventory_store.add_items(current_skill_target.name, 1)
-    skill_store.gain_skill_xp(current_skill.name, current_skill_target.xp.fishing)
-  }
-}, 100);
+const { skills, skill_definitions, current_skill_target, current_skill } = storeToRefs(skill_store)
 </script>
 
 <template lang="pug">

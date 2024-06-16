@@ -1,14 +1,21 @@
 import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
+import { useItemStore } from '@/stores/item'
+import { storeToRefs } from 'pinia'
 
 export const useSkillStore = defineStore('skills', () => {
   const skill_definitions = ref([
     { name: 'Fishing', xp: 0, level: 1, maxlevel: 99, description: "catch raw fish"},
     { name: 'Cooking', xp: 0, level: 1, maxlevel: 99, description: "Cook raw food, increasing the amount healed"}
   ])
-  
+
+  const item_store = useItemStore()
+  const { items } = storeToRefs(item_store)
   const skills = reactive({})
   skill_definitions.value.forEach((s) => skills[s.name] = s)
+
+  const current_skill_target = items.value[0]
+  const current_skill = skills['Fishing']
 
   function gain_skill_xp(skill_name, xp) {
     const skill = skills[skill_name]
@@ -19,5 +26,5 @@ export const useSkillStore = defineStore('skills', () => {
     }
   }
 
-  return { skills, skill_definitions, gain_skill_xp }
+  return { skills, skill_definitions, gain_skill_xp, current_skill_target, current_skill }
 })
