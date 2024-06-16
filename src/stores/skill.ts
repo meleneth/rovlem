@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useSkillStore = defineStore('skills', () => {
@@ -7,7 +7,7 @@ export const useSkillStore = defineStore('skills', () => {
     { name: 'Cooking', xp: 0, level: 1, maxlevel: 99, description: "Cook raw food, increasing the amount healed"}
   ])
   
-  const skills = ref({})
+  const skills = reactive({})
   skill_definitions.value.forEach((s) => skills[s.name] = s)
 
   function gain_skill_xp(skill_name, xp) {
