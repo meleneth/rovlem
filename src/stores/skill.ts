@@ -3,8 +3,10 @@ import { defineStore } from 'pinia'
 import { useItemStore } from '@/stores/item'
 import { storeToRefs } from 'pinia'
 
+import type { Skill } from '@/types'
+
 export const useSkillStore = defineStore('skills', () => {
-  const skill_definitions = ref([
+  const skill_definitions = ref<Skill[]>([
     { name: 'Fishing', xp: 0, level: 1, maxlevel: 99, description: "catch raw fish"},
     { name: 'Cooking', xp: 0, level: 1, maxlevel: 99, description: "Cook raw food, increasing the amount healed"}
   ])
