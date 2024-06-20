@@ -3,7 +3,11 @@ import { defineStore } from 'pinia'
 import { useItemStore } from '@/stores/item'
 import { storeToRefs } from 'pinia'
 
-import type { Skill } from '@/types'
+import type { Skill, Item } from '@/types'
+
+type Skills = {
+  [key: string]: Skill;
+}
 
 export const useSkillStore = defineStore('skills', () => {
   const skill_definitions = ref<Skill[]>([
@@ -13,18 +17,18 @@ export const useSkillStore = defineStore('skills', () => {
 
   const item_store = useItemStore()
   const { items } = storeToRefs(item_store)
-  const skills = reactive({})
+  const skills = reactive<Skills>({})
   skill_definitions.value.forEach((s) => skills[s.name] = s)
 
   let current_skill_target = items.value[0]
   let current_skill = skills['Fishing']
 
-  function change_skill(new_skill, item) {
+  function change_skill(new_skill: string, item: Item) {
     this.current_skill = skills[new_skill]
     this.current_skill_target = item
   }
 
-  function gain_skill_xp(skill_name, xp) {
+  function gain_skill_xp(skill_name: string, xp: number) {
     const skill = skills[skill_name]
     skill.xp = skill.xp + xp
     if(skill.xp > (skill.level * 10)) {
