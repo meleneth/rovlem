@@ -24,8 +24,7 @@ const ticktimer = setInterval(() => {
   num_ticks.value = num_ticks.value + 1;
   if (num_ticks.value > current_skill_target.value.ticks) {
     num_ticks.value -= current_skill_target.value.ticks
-    inventory_store.add_items(current_skill_target.value.name, 1)
-    skill_store.gain_skill_xp(current_skill.value.name, current_skill_target.value.xp.fishing)
+    skill_store.skill_tick()
   }
 }, 100);
 </script>

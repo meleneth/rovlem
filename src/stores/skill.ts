@@ -1,6 +1,7 @@
 import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import { useItemStore } from '@/stores/item'
+import { useInventoryStore } from '@/stores/inventory'
 import { storeToRefs } from 'pinia'
 
 import type { Skill, Skills, Item, CookingSkill, FishingSkill, PossibleSkillingTarget, AllSkills } from '@/types'
@@ -26,6 +27,8 @@ export const useSkillStore = defineStore('skills', () => {
   const item_store = useItemStore()
   const { item_definitions } = storeToRefs(item_store)
 
+  const inventory_store = useInventoryStore()
+  const { inventory } = storeToRefs(inventory_store)
   const skills_by_skill_name = reactive<AllSkills>({})
   skill_definitions.value.forEach((s) => skills_by_skill_name[s.name] = reactive({}))
   fishing_skills.value.forEach((s) => skills_by_skill_name['Fishing'][s.name] = s)
@@ -42,6 +45,32 @@ export const useSkillStore = defineStore('skills', () => {
     console.log(`Changing skill to ${new_skill} targetting ${target}`)
     this.current_skill = skills[new_skill]
     this.current_skill_target = my_target
+  }
+
+  function stop_skilling(){
+    this.current_skill = ref(false)
+    this.current_skill_target = ref(false)
+  }
+
+  function skill_tick() {
+    console.log(`skill_tick() for ${this.current_skill.name}`)
+    if(this.current_skill.name == 'Fishing') {
+      inventory_store.add_items(this.current_skill_target.name, 1)
+      this.gain_skill_xp(this.current_skill.name, this.current_skill_target.xp.fishing)
+    } else if (this.current_skill.name == 'Cooking') {
+      try {
+      inventory_store.consume_items(this.current_skill_target.name, 1)
+      inventory_store.add_items(this.current_skill_target.produces, 1)
+      this.gain_skill_xp(this.current_skill.name, this.current_skill_target.xp.cooking)
+      }
+      catch (err) {
+        if(err == "Not enough") {
+          this.stop_skilling(`Not enough ${this.current_skill_target.name}`)
+        }else {
+          throw err
+        }
+      }
+    }
   }
 
   function gain_skill_xp(skill_name: string, xp: number) {
@@ -62,6 +91,8 @@ export const useSkillStore = defineStore('skills', () => {
     change_skill,
     fishing_skills,
     cooking_skills,
+    skill_tick,
+    stop_skilling,
     skills_by_skill_name
   }
 })
