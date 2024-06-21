@@ -37,35 +37,35 @@ export const useSkillStore = defineStore('skills', () => {
   const skills = reactive<Skills>({})
   skill_definitions.value.forEach((s) => skills[s.name] = s)
 
-  let current_skill_target = ref(false)
-  let current_skill = ref(false)
+  let current_skill = skills['Fishing']
+  let current_skill_target = skills_by_skill_name['Fishing']['Raw Salmon']
 
   function change_skill(new_skill: string, target: string) {
-    const my_target = this.skills_by_skill_name[new_skill][target]
+    const my_target = skills_by_skill_name[new_skill][target]
     console.log(`Changing skill to ${new_skill} targetting ${target}`)
-    this.current_skill = skills[new_skill]
-    this.current_skill_target = my_target
+    current_skill = skills[new_skill]
+    current_skill_target = my_target
   }
 
   function stop_skilling(){
-    this.current_skill = ref(false)
-    this.current_skill_target = ref(false)
+    current_skill = ref(false)
+    current_skill_target = ref(false)
   }
 
   function skill_tick() {
-    console.log(`skill_tick() for ${this.current_skill.name}`)
-    if(this.current_skill.name == 'Fishing') {
-      inventory_store.add_items(this.current_skill_target.name, 1)
-      this.gain_skill_xp(this.current_skill.name, this.current_skill_target.xp.fishing)
-    } else if (this.current_skill.name == 'Cooking') {
+    console.log(`skill_tick() for ${current_skill.name}`)
+    if(current_skill.name == 'Fishing') {
+      inventory_store.add_items(current_skill_target.name, 1)
+      gain_skill_xp(current_skill.name, current_skill_target.xp.fishing)
+    } else if (current_skill.name == 'Cooking') {
       try {
-      inventory_store.consume_items(this.current_skill_target.name, 1)
-      inventory_store.add_items(this.current_skill_target.produces, 1)
-      this.gain_skill_xp(this.current_skill.name, this.current_skill_target.xp.cooking)
+        inventory_store.consume_items(current_skill_target.name, 1)
+        inventory_store.add_items(current_skill_target.produces, 1)
+        gain_skill_xp(current_skill.name, current_skill_target.xp.cooking)
       }
       catch (err) {
         if(err == "Not enough") {
-          this.stop_skilling(`Not enough ${this.current_skill_target.name}`)
+          stop_skilling(`Not enough ${current_skill_target.name}`)
         }else {
           throw err
         }
