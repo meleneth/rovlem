@@ -2,13 +2,9 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useItemStore } from '@/stores/item'
 import { useSkillStore } from '@/stores/skill'
 import { useInventoryStore } from '@/stores/inventory'
 import HelloWorld from './components/HelloWorld.vue'
-
-const item_store = useItemStore()
-const { items } = storeToRefs(item_store)
 
 const inventory_store = useInventoryStore()
 const { inventory } = storeToRefs(inventory_store)
