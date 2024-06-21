@@ -8,22 +8,19 @@ import ItemInfo from '../components/ItemInfo.vue'
 import SkillInfo from '../components/SkillInfo.vue'
 
 const item_store = useItemStore()
-const { items } = storeToRefs(item_store)
+const { items_by_name } = storeToRefs(item_store)
 
 const inventory_store = useInventoryStore()
 const { inventory } = storeToRefs(inventory_store)
 
 const skill_store = useSkillStore()
-const { skills, skill_definitions, current_skill_target, current_skill, change_skill } = storeToRefs(skill_store)
+const { skills, skill_definitions, current_skill_target, current_skill, change_skill, fishing_skills } = storeToRefs(skill_store)
 </script>
 
 <template lang="pug">
   ul
-    li(v-for="skill in skill_definitions")
-      <SkillInfo :skill="skill" />
-  ul
-    li(v-for="item in items")
-      <ItemInfo :item="item" />
-      p(@click="skill_store.change_skill('Fishing', item)")
+    li(v-for="skill in fishing_skills")
+      <ItemInfo :item="items_by_name[skill.name]" />
+      p(@click="skill_store.change_skill('Fishing', skill.name)")
         | fishme
 </template>
