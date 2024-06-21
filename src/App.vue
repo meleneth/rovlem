@@ -12,17 +12,17 @@ const { inventory } = storeToRefs(inventory_store)
 const skill_store = useSkillStore()
 const { current_skill, current_skill_target } = storeToRefs(skill_store)
 
-var num_ticks = ref(0);
+var num_ticks = ref(0)
 
 skill_store.change_skill('Fishing', 'Raw Salmon')
 
 const ticktimer = setInterval(() => {
-  num_ticks.value = num_ticks.value + 1;
+  num_ticks.value = num_ticks.value + 1
   if (num_ticks.value > current_skill_target.value.ticks) {
     num_ticks.value -= current_skill_target.value.ticks
     skill_store.skill_tick()
   }
-}, 100);
+}, 100)
 </script>
 
 <template>

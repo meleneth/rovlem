@@ -14,8 +14,8 @@ export const useInventoryStore = defineStore('inventory', () => {
   function consume_items(item_name: string, qty: number) {
     console.log(`Consuming ${qty} of ${item_name}`)
     const new_qty = (inventory[item_name] || 0) - qty
-    if(new_qty < 0) {
-      throw "Not enough"
+    if (new_qty < 0) {
+      throw 'Not enough'
     }
     inventory[item_name] = new_qty
   }

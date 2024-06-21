@@ -14,7 +14,8 @@ const inventory_store = useInventoryStore()
 const { inventory } = storeToRefs(inventory_store)
 
 const skill_store = useSkillStore()
-const { skills, skill_definitions, current_skill_target, current_skill, fishing_skills } = storeToRefs(skill_store)
+const { skills, skill_definitions, current_skill_target, current_skill, fishing_skills } =
+  storeToRefs(skill_store)
 </script>
 
 <template lang="pug">
