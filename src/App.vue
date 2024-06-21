@@ -37,6 +37,9 @@ const ticktimer = setInterval(() => {
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/inventory">Inventory</RouterLink>
+        <RouterLink to="/fishing">Fishing</RouterLink>
+        <RouterLink to="/cooking">Cooking</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
