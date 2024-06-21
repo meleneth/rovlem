@@ -8,9 +8,6 @@ import { storeToRefs } from 'pinia'
 import ItemInfo from '../components/ItemInfo.vue'
 import SkillInfo from '../components/SkillInfo.vue'
 
-const item_store = useItemStore()
-const { items } = storeToRefs(item_store)
-
 const inventory_store = useInventoryStore()
 const { inventory } = storeToRefs(inventory_store)
 </script>
